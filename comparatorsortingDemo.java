@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-class Student {
+class Student implements Comparable<Student> {
     String name;
     int rollno;
     int marks;
@@ -12,6 +12,12 @@ class Student {
         this.name = name;
         this.rollno = rollno;
         this.marks = marks;
+    }
+
+    // Natural ordering: students are sorted by marks from lowest to highest.
+    @Override
+    public int compareTo(Student other) {
+        return Integer.compare(this.marks, other.marks);
     }
 }
 
@@ -36,7 +42,8 @@ public class comparatorsortingDemo {
         students.add(new Student("hitesh", 9, 70));
         students.add(new Student("rehan", 20, 80));
 
-        students.sort(Comparator.comparingInt((Student student) -> student.marks).reversed());
+        // Comparable provides ascending order; reverse it to show highest marks first.
+        Collections.sort(students, Collections.reverseOrder());
 
         for (Student student : students) {
             System.out.println(student.rollno + " " + student.name + " " + student.marks);
